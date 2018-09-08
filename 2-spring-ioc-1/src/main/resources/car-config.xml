@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 
+//		CarMaker hyundaiMaker = new HyundaiMaker(); // 객체 생성
+//		CarMaker kiaMaker = new KiaMaker(); // 객체 생성
+//		
+//		OrderManager manager = new OrderManager(); // 객체 생성
+//		manager.setMaker(hyundaiMaker); // 의존객체 주입
+//
+//		manager.order(); // 로직 수행 >> AI 에게 요청!
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<bean id="hyundaiMaker" class="com.example.demo.ioc3.HyundaiMaker"></bean>
+	<bean id="kiaMaker" class="com.example.demo.ioc3.KiaMaker"></bean>
+	
+	<bean id="manager" class="com.example.demo.ioc3.OrderManager">
+		<!-- property 설정은 setMaker 세터메소드를 사용하여 주입됩니다. -->
+		<property name="maker" ref="hyundaiMaker"></property>
+	</bean>
+
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
