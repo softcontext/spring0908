@@ -1,5 +1,10 @@
-package com.example.demo.ioc3;
+package com.example.demo.ioc4;
 
+import org.springframework.stereotype.Component;
+
+// <bean id="hyundaiMaker" class="com.example.demo.ioc4.HyundaiMaker"></bean>
+
+@Component("hyundaiMaker") // 클래스를 빈 컨테이너에 등록하라.
 public class HyundaiMaker implements CarMaker {
 	@Override
 	public Car sell(Money money) {
@@ -15,19 +20,6 @@ public class HyundaiMaker implements CarMaker {
 		return car;
 	}
 	
-//	public int sell(int amount, int count) {
-//		
-//		return 0;
-//	}
-//	
-//	public Vehicle sell(Vehicle vehicle) {
-//		
-//		return null;
-//	}
 }
 
-//class Vehicle {
-//	int amount;
-//	int count;
-//}
 
