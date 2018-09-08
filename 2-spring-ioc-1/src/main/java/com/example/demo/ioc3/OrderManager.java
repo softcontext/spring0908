@@ -3,6 +3,15 @@ package com.example.demo.ioc3;
 public class OrderManager {
 	private CarMaker maker;
 
+	public OrderManager() {
+		
+	}
+	
+	public OrderManager(CarMaker maker) {
+		super();
+		this.maker = maker;
+	}
+
 	public void order() {
 		System.out.println("OrderManager # order() called.");
 		
