@@ -9,7 +9,13 @@
 	<!-- 
 		base-package 부터 애노테이션이 붙어 있는 클래스들을 스캔하여
 		요청받은 처리를 수행하라. 그 결과로 빈 컨테이너에 빈 객체들이 등록되고 관계가 설정됩니다.
+		<context:annotation-config> 선언을 포함한다.
 	 -->
 	<context:component-scan base-package="com.example.demo.ioc4"></context:component-scan>
+
+	<!-- 
+		@Resource, @Autowired 등에 애노테이션 요청사항을 처리하라.
+	 -->
+	<context:annotation-config></context:annotation-config>
 
 </beans>

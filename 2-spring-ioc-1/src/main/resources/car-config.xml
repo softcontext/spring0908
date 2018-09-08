@@ -18,21 +18,14 @@
 
 
 
-
-
-
-
-
-
-
-
 	<bean id="hyundaiMaker" class="com.example.demo.ioc3.HyundaiMaker"></bean>
 	<bean id="kiaMaker" class="com.example.demo.ioc3.KiaMaker"></bean>
 	
 	<!-- 
 		스프링은 기본적으로 new OrderManager() 기본생성자를 사용하려고 시도한다.
 	 -->
-	<bean id="manager" class="com.example.demo.ioc3.OrderManager">
+	<bean id="manager" class="com.example.demo.ioc3.OrderManager" 
+		scope="prototype">
 		<!-- property 설정은 setMaker 세터메소드를 사용하여 주입됩니다. -->
 		<!-- <property name="maker" ref="hyundaiMaker"></property> -->
 		

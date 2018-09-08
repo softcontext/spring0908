@@ -19,7 +19,9 @@ public class Test {
 		 * 
 		 * 설정파일 같은 요청방식 3가지
 		 * 1. XML
+		 *    변화가 많다고 판단될 때 주로 사용
 		 * 2. Annotation
+		 *    변화가 없다고 판단될 때 주로 사용
 		 * 3. Java Config Class
 		 */
 		

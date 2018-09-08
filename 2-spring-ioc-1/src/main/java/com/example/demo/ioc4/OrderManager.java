@@ -2,6 +2,8 @@ package com.example.demo.ioc4;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,7 @@ public class OrderManager {
 	// 컨테이너에 존재하는 객체들 중에서 id가 "kiaMaker" 인 객체를 찾아서
 	// 변수에 직접 할당해 달라는 요청이다.
 	// 애노테이션은 setter 메소드를 사용하지 않고도 직접 변수에 할당할 수 있다.
-	@Resource(name="kiaMaker")
+//	@Resource(name="kiaMaker")
 	private CarMaker maker;
 
 	public OrderManager() {
@@ -42,8 +44,19 @@ public class OrderManager {
 		return maker;
 	}
 
+//	@Resource(name="kiaMaker")
+	
+	// @Autowired 은 요청받은 대상을 자료형으로 찾아서 주입합니다.
+	// expected single matching bean but found 2: hyundaiMaker,kiaMaker
+	// CarMaker 자료형의 객체가 2개 존재한다. 주입할 객체를 결정해 달라.
+	@Autowired
+	@Qualifier("hyundaiMaker")
 	public void setMaker(CarMaker maker) {
 		this.maker = maker;
 	}
 	
 }
+
+
+
+
