@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:component-scan base-package="com.example.demo.aopns1"/>
+	
+	<bean id="pointCut" class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+		<property name="expression">
+			<value>execution(* com.example.demo.aopns1.Second.two())</value>
+		</property>
+	</bean>
+	
+	<aop:config>
+		<!-- id="pointCut" 설정 부분을 한줄로 짧게 선언하는 방법 -->
+		<aop:pointcut expression="execution(* divide(int,..))" id="xxx"/>
+	
+		<!-- 어드바이스 객체가 어드바이스 인터페이스 중 하나를 구현한 객체인 경우 -->
+		<aop:advisor advice-ref="myAdvice" pointcut-ref="pointCut"/>
+		
+		<!-- 
+			어드바이스 객체가 어드바이스 인터페이스를 구현하지 않았다면
+			그 안에 있는 메소드는 언제 쓰는 어드바이스 인지 알려주기 위해서
+			aop:aspect 태그로 설정합니다.
+		 -->
+		<aop:aspect ref="myAspect">
+			<aop:before method="myBefore" pointcut="execution(* one()) || execution(* divide(int,int))"/>
+			<aop:around method="myAround" pointcut-ref="pointCut"/>
+			<aop:after-returning method="myAfterReturning" pointcut-ref="xxx"/>
+			<aop:after-throwing method="myAfterThrowing" pointcut-ref="xxx"/>
+			<aop:after method="myAfter" pointcut-ref="xxx"/>
+		</aop:aspect>
+	</aop:config>
+	
+</beans>
+
+
+
+
+
+

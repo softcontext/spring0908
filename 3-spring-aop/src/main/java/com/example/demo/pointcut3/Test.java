@@ -17,9 +17,13 @@ public class Test {
 		// execution(표현식) = 사용하는 문법의 종류
 		// * two(..) = 리턴자료형 메소드명(파라미터)
 		// .. = 0~N개, 자료형은 상관 없음
+		// 리턴자료형 메소드명(파라미터) 설정은 필수항목!
 		
 		// 메소드명이 정확하게 two인 대상만 선택한다.
-		pointcut.setExpression("execution(* two(..))");
+//		pointcut.setExpression("execution(* two(..))");
+		
+		pointcut.setExpression(
+			"execution(* com.example.demo.pointcut3.Second.two(..))");
 		
 		Advice advice = new MyAdvice();
 		
