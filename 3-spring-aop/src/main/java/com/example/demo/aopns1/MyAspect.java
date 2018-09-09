@@ -40,12 +40,14 @@ public class MyAspect {
 	
 	
 	// 타겟 메소드가 정상적으로 작동한 후
-	public void myAfterReturning(JoinPoint pjp) {
+	public void myAfterReturning(JoinPoint pjp, Object result) {
 		System.out.println("********myAfterReturning********");
+		System.out.println("result = " + result);
 	}
 	// 타겟 메소드가 작동하다가 예외가 발생한 후
-	public void myAfterThrowing(JoinPoint pjp) {
+	public void myAfterThrowing(JoinPoint pjp, Throwable e) {
 		System.out.println("~~~~~~~~myThrowing~~~~~~~~~");
+		System.out.println("e = " + e.getMessage());
 	}
 	// 타겟 메소드가 정상/예외 상관없이 그 후에 항상 기동
 	public void myAfter(JoinPoint pjp) {

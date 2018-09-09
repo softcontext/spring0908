@@ -9,11 +9,6 @@
 
 	<context:component-scan base-package="com.example.demo.aopns1"/>
 	
-	<bean id="pointCut" class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
-		<property name="expression">
-			<value>execution(* com.example.demo.aopns1.Second.two())</value>
-		</property>
-	</bean>
 	
 	<aop:config>
 		<!-- id="pointCut" 설정 부분을 한줄로 짧게 선언하는 방법 -->
@@ -30,11 +25,18 @@
 		<aop:aspect ref="myAspect">
 			<aop:before method="myBefore" pointcut="execution(* one()) || execution(* divide(int,int))"/>
 			<aop:around method="myAround" pointcut-ref="pointCut"/>
-			<aop:after-returning method="myAfterReturning" pointcut-ref="xxx"/>
-			<aop:after-throwing method="myAfterThrowing" pointcut-ref="xxx"/>
+			<aop:after-returning method="myAfterReturning" pointcut-ref="xxx" returning="result"/>
+			<aop:after-throwing method="myAfterThrowing" pointcut-ref="xxx" throwing="e"/>
 			<aop:after method="myAfter" pointcut-ref="xxx"/>
 		</aop:aspect>
 	</aop:config>
+	
+	
+	<bean id="pointCut" class="org.springframework.aop.aspectj.AspectJExpressionPointcut">
+		<property name="expression">
+			<value>execution(* com.example.demo.aopns1.Second.two())</value>
+		</property>
+	</bean>
 	
 </beans>
 
