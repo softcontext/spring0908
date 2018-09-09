@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 
+		Hello hello = new Hello();
+		
+		Advice advice = new MyMethodInterceptor();
+		
+		ProxyFactory factory = new ProxyFactory();
+		factory.setTarget(hello);
+		factory.addAdvice(advice);
+		
+		Hello proxy = (Hello) factory.getProxy();
+ -->
+	<bean id="hello" class="com.example.demo.proxy8.Hello"></bean>
+	
+	<bean id="advice" class="com.example.demo.proxy8.MyMethodInterceptor"></bean>
+	
+	<!-- 
+		ProxyFactoryBean 설정으로 ProxyFactory 객체가 컨테이너에 등록되는 것이 아니라
+		target 객체와 advice 객체를 사용하여 동적으로 타겟 객체를 프록싱하는
+		프록시 객체가 컨테이너에 등록됩니다.
+	 -->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="hello"/>
+		<property name="interceptorNames">
+			<list>
+				<value>advice</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+
+</beans>
