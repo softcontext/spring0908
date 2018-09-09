@@ -22,7 +22,6 @@ public class HyundaiMaker implements CarMaker {
 		return car;
 	}
 	
-	@PostConstruct
 	public void init() {
 		System.out.println(">> HyundaiMaker # init() called.");
 	}
