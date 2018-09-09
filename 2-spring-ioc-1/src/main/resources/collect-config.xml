@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:list id="myList">
+		<value>10</value>
+		<value>Tom</value>
+		<value>20</value>
+	</util:list>
+
+	<bean id="value" class="com.example.demo.collection.Value" 
+		p:list-ref="myList">
+		<!-- 
+		<property name="list">
+			<list>
+				<value>10</value>
+				<value>Tom</value>
+				<value>20</value>
+			</list>
+		</property>
+		 -->
+		<property name="map">
+			<map>
+				<entry key="spring">
+					<value>봄</value>
+				</entry>
+				<entry key="summer">
+					<value>여름</value>
+				</entry>
+			</map>
+		</property>
+		<property name="props">
+			<props>
+				<prop key="spring">
+					봄
+				</prop>
+				<prop key="summer">
+					여름
+				</prop>
+			</props>
+		</property>
+		<property name="set" ref="mySet">
+			<!-- <set>
+				<value>10</value>
+				<value>Tom</value>
+				<value>10</value>
+			</set> -->
+		</property>
+	</bean>
+	
+	<util:set id="mySet">
+		<value>10</value>
+		<value>Tom</value>
+		<value>10</value>
+		<value>30</value>
+	</util:set>
+	
+</beans>

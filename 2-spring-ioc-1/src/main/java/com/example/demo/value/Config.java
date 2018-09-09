@@ -24,7 +24,7 @@ public class Config {
 	@Value("${java.version}")
 	private String javaVersion;
 	
-	// jvm 실행 시 -D 옵션으로 주는 값에 대해서 아래와 같이 읽을 수 있다.
+	// java -jar 배포파일.jar -D 옵션으로 주는 값에 대해서 아래와 같이 읽을 수 있다.
 	@Value("#{ systemProperties['user.region'] == null ? 'KR' : systemProperties['user.region']}") // KR
 	private String defaultLocale;
 
