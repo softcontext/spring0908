@@ -2,8 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
@@ -32,6 +36,33 @@
 
 	<context:component-scan
 		base-package="com.example.team" />
+
+	<!-- 
+		트랜잭션 어드바이스 어라운드 어드바이스여야 하고 
+		그 코드는 누가 짜도 똑 같기 때문에 설정정보만 주면 스프링이 알아서 코딩한다. -->
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="find*" 
+				isolation="DEFAULT"
+				propagation="REQUIRED"
+				read-only="false"
+				timeout="-1"
+				rollback-for="Exception"
+				no-rollback-for="RuntimeException"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<tx:annotation-driven 
+		transaction-manager="transactionManager" 
+		proxy-target-class="false"/>
+
+	<aop:config>
+		<aop:pointcut 
+			expression="expression(* com.example..*DaoImpl.*(..))" 
+			id="txPointcut"/>
+		
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
 
 </beans>
 

@@ -8,7 +8,7 @@ import com.example.demo.model.Emp;
 public interface EmpDao {
 	// 테이블의 데이터를 조작하는 기능
 	// 리턴 값: 영향받은 로우의 개수
-	public int insert(Emp emp);
+	public Emp insert(Emp emp);
 	public int update(Emp emp);
 	public int delete(int empno);
 	
