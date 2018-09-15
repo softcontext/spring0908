@@ -2,13 +2,17 @@ package com.example.team.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import com.example.team.model.Emp;
@@ -18,6 +22,8 @@ import com.example.team.model.Emp;
 public class EmpDaoImpl implements EmpDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	@Autowired
+	private NamedParameterJdbcTemplate namedTemplate;
 
 	private RowMapper<Emp> rowMapper = new RowMapper<Emp>() {
 //		테이블 한 로우의 칼럼들의 정보를 꺼내서
@@ -40,12 +46,22 @@ public class EmpDaoImpl implements EmpDao {
 	
 	@Override
 	public int insert(Emp emp) {
+//		String sql = "insert into emp9(empno, ename, job) "
+//				+ "values(?, ?, ?)";
+//		return jdbcTemplate.update(sql, 
+//				emp.getEmpno(),
+//				emp.getEname(),
+//				emp.getJob());
+		
 		String sql = "insert into emp9(empno, ename, job) "
-				+ "values(?, ?, ?)";
-		return jdbcTemplate.update(sql, 
-				emp.getEmpno(),
-				emp.getEname(),
-				emp.getJob());
+				+ "values(:empno, :ename, :job)";
+		
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("empno", emp.getEmpno());
+		paramMap.put("ename", emp.getEname());
+		paramMap.put("job", emp.getJob());
+		
+		return namedTemplate.update(sql, paramMap);
 	}
 
 	@Override
