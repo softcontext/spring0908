@@ -17,4 +17,15 @@
 	
 	<context:property-placeholder location="classpath:jdbc.properties"/>
 
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<context:component-scan base-package="com.example.team"/>
+	
 </beans>
+
+
+
+
+
