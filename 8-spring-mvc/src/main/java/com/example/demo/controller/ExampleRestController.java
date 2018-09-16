@@ -5,9 +5,11 @@ import java.util.Map;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,9 @@ public class ExampleRestController {
 	}
 
 	@PostMapping("/demo")
-	public Object post() {
-		return null;
+	public Object post(@RequestBody Map<String, String> map) {
+		System.out.println(map);
+		
+		return new HttpEntity<>(HttpStatus.OK);
 	}
 }

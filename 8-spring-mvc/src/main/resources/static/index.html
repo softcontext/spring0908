@@ -20,6 +20,7 @@
 	
 	<script type="text/javascript">
 		var target = document.querySelector("#target");
+		var input = document.querySelectorAll("input")[0];
 		
 		console.log(axios);
 		
@@ -40,9 +41,10 @@
 			
 			//alert('send');
 			
-			axios.post('', {
+			axios.post('http://localhost:8080/example/demo', {
 			    firstName: 'Fred',
-			    lastName: 'Flintstone'
+			    lastName: 'Flintstone',
+			    color: input.value
 			  })
 			  .then(function (response) {
 			    console.log(response);

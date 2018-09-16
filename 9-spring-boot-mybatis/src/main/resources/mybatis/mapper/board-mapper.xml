@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.board.dao.BoardDao">
+
+
+<!-- 
+	public int insert(Board board);
+	public int update(Board board);
+	public int delete(int id);
+	
+	public Board findOne(int id);
+	public List<Board> findLimit(int page, int size);
+ -->
+ 	
+ 	<!-- insert/update/delete 쿼리는 영향받은 로우의 개수가 자동으로 리턴됩니다. -->
+	<insert id="insert" 
+		parameterType="com.example.demo.board.model.Board">
+		INSERT INTO board(writer, title, content, reg_date, hit_count)
+		VALUES(#{writer}, #{title}, #{content}, CURRENT_TIMESTAMP(), 0)
+	</insert>
+
+	<select id="findLimit" 
+		resultType="com.example.demo.board.model.Board">
+	
+		<bind name="offset" 
+			value="@com.example.demo.board.model.Board@seekOffset(page, size)"/>
+		            
+		SELECT * FROM board ORDER BY id DESC OFFSET #{offset} LIMIT #{size}
+	
+	</select>	
+
+</mapper>
+
+
+
+
+
+
