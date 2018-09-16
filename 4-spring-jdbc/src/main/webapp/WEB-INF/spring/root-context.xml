@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans default-lazy-init="true"
+	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
@@ -37,28 +38,60 @@
 	<context:component-scan
 		base-package="com.example.team" />
 
+
+
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+
 	<!-- 
 		트랜잭션 어드바이스 어라운드 어드바이스여야 하고 
 		그 코드는 누가 짜도 똑 같기 때문에 설정정보만 주면 스프링이 알아서 코딩한다. -->
-	<tx:advice id="txAdvice">
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="find*" 
+			<!-- 트랜잭션 속성의 기본 설정 그대로 적용하는 예 -->
+			<!-- 
+				Exception(Checked Exception)
+					try-catch가 강제되므로 개발자가 예외처리를 한단고 판단
+					스프링은 커밋을 수행한다.
+				RuntimeException(Unchecked Exception)
+					try-catch가 강제되지 않으므로 개발자가 예외처리를 못했을 수도 있다고 판단
+					스프링은 롤백을 수행한다.
+					스프링 JDBC는 수 많은 데이터베이스가 던지는 예외를
+					예외전환 서비스로직으로 처리하여 Checked Exception을
+					Unchecked Exception으로 바꾸어 재 throw 합니다.
+			 -->
+			<tx:method name="insert*" 
 				isolation="DEFAULT"
 				propagation="REQUIRED"
 				read-only="false"
 				timeout="-1"
+				rollback-for="RuntimeException"/>
+			<!-- 필요 시 트랜잭션 속성을 변경해서 사용 -->
+			<tx:method name="find*" 
+				read-only="true"
+				timeout="10"
 				rollback-for="Exception"
-				no-rollback-for="RuntimeException"/>
+				no-rollback-for="ArithmeticException"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="search*" read-only="true"/>
+			<tx:method name="select*" read-only="true"/>
 		</tx:attributes>
 	</tx:advice>
-	
-	<tx:annotation-driven 
+
+
+
+	<!-- @Transactional 사용 통보 -->
+	<!-- <tx:annotation-driven 
 		transaction-manager="transactionManager" 
-		proxy-target-class="false"/>
+		proxy-target-class="false"/> -->
 
 	<aop:config>
 		<aop:pointcut 
-			expression="expression(* com.example..*DaoImpl.*(..))" 
+			expression="execution(* com.example.team.dao.EmpDaoImpl.*(..))" 
 			id="txPointcut"/>
 		
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>

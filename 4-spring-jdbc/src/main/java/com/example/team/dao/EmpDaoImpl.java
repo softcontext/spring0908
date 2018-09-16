@@ -14,10 +14,20 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.team.model.Emp;
 
 //@Component
+//@Transactional(
+//	isolation=Isolation.DEFAULT,
+//	propagation=Propagation.REQUIRED,
+//	readOnly=false,
+//	timeout=-1,
+//	rollbackFor=RuntimeException.class
+//)
 @Repository
 public class EmpDaoImpl implements EmpDao {
 	@Autowired
@@ -75,12 +85,14 @@ public class EmpDaoImpl implements EmpDao {
 				emp.getEmpno());
 	}
 
+//	@Transactional
 	@Override
 	public int delete(int empno) {
 		String sql = "delete emp9 where empno=?";
 		return jdbcTemplate.update(sql, empno);
 	}
 
+//	@Transactional(readOnly=true)
 	@Override
 	public Emp findOne(int empno) {
 //		String sql = "select * from emp9 where empno=" + empno;
