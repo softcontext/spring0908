@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 
+		디폴트 네임스페이가 mvc이므로 다음 코드는
+		<mvc:annotation-driven /> 이 된다.
+		컨트롤러에 @RequestMapping 같은 애노테이션을 사용하니 처리하라고 요청한다.
+	 -->
+	<annotation-driven />
+
+	<!-- 
+		mapping="/public/**" : 가상 접근 경로 URL
+		location="/resources/" : 실제 폴더 패스(정적 리소스 서비스 폴더)
+	 -->	
+	<resources mapping="/public/**" location="/resources/" />
+
+	<!-- 
+		컨트롤러: return "home" ==> DS ==> VR
+		InternalResourceViewResolver: "/WEB-INF/views/home.jsp" ==> DS
+		DS: 컨트롤러가 준 데이터를 뷰리졸버가 알려준 대상에게 전송
+			Model 담긴 데이터를 HttpServletRequest 옮겨 담는다.
+			HttpServletRequest 객체는 Sevlet Framwork 기술에 의해서
+			뷰의 역할을 수행하는 JSP에게 전달됩니다.
+			JSP는 ${} EL표기식으로 Request 객체에 있는 데이터를 바로 사용할 수 있다.
+			
+		"/WEB-INF/views/example-data-get.jsp"
+	 -->
+	<beans:bean 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<!-- @Controller 찾아서 처리를 요청한다. -->
+	<context:component-scan base-package="com.example.demo" />
+	
+	
+	
+</beans:beans>

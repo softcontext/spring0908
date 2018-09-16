@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+</head>
+<body>
+	<h3>Demo</h3>
+	
+	<p>
+		<a href="#" onclick="find()">Get</a>
+		<div id="target"></div>
+	</p>
+	
+	<form method="post" onsubmit="send(event)">
+		<input type="text" name="color" value="Blue">
+		<button type="submit">Post</button>
+	</form>
+	
+	<script type="text/javascript">
+		var target = document.querySelector("#target");
+		
+		console.log(axios);
+		
+		function find(){
+			//alert('find');
+			
+			axios.get('http://localhost:8080/example/demo')
+			  .then(function (response) {
+			    console.log(response);
+			    target.innerHTML = JSON.stringify(response.data);
+			  })
+			  .catch(function (error) {
+			    console.log(error);
+			  })
+		}	
+		function send(e){
+			e.preventDefault();
+			
+			//alert('send');
+			
+			axios.post('', {
+			    firstName: 'Fred',
+			    lastName: 'Flintstone'
+			  })
+			  .then(function (response) {
+			    console.log(response);
+			  })
+			  .catch(function (error) {
+			    console.log(error);
+			  });
+		}
+	</script>
+</body>
+</html>

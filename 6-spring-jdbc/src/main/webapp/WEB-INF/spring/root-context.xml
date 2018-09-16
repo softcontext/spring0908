@@ -40,7 +40,7 @@
 	<context:component-scan
 		base-package="com.example.demo" />
 
-	<bean id="transactionManager"
+	<bean id="transactionManager" 
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
@@ -58,11 +58,14 @@
 
 
 	<aop:config>
-		<aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* com.example.demo.dao.EmpDaoImpl.*(..))" />
-		
 		<!-- <aop:advisor advice-ref="txAdvice"
-			pointcut="execution(* *(..))" /> -->			
+			pointcut="execution(* *(..))" /> -->	
+			
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.example.demo.dao..*Dao*.*(..))" />
+			
+		<!-- <aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.example.demo.dao.EmpDaoImpl.*(..))" /> -->
 	</aop:config>
 
 

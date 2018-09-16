@@ -22,6 +22,8 @@ public class EmpDaoImplTest {
 //	@Transactional
 	@Test
 	public void testInsert() {
+		System.out.println("START");
+		
 		int oldCount = dao.count();
 		System.out.println("oldCount = " + oldCount);
 		
